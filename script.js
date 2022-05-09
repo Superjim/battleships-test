@@ -24,10 +24,6 @@ function renderGrid(size) {
   gridLocation.appendChild(table);
 }
 
-function getCoords() {
-  alert(this.innerText);
-}
-
 function setHit() {
   this.classList.remove("empty");
   this.classList.add("hit");

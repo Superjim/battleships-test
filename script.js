@@ -240,15 +240,16 @@ function buildgame() {
   }
 }
 
-running = true;
-
 buildgame();
 
+//loop to make sure game board is valid and ships dont overlap
+//and to not get stuck in a recursive loop
 for (i = 0; i < 20; i++) {
   if (checkValidGrid(enemyGrid) === false) {
     buildgame();
   }
 }
+
 //testing
 gridConsole(enemyGrid);
 // gridConsole(heroGrid);

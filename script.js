@@ -38,7 +38,8 @@ function getCoords() {
   splitCoords(this.innerText);
   if (checkGrid(splitCoords(this.innerText), enemyGrid) === true) {
     setHit(this.innerText);
-  } else setMiss(this.innerText);
+  }
+  setMiss(this.innerText);
 }
 
 function splitCoords(coords) {
@@ -50,7 +51,7 @@ function setMiss(coords) {
   document.getElementById(coords).classList.replace("empty", "miss");
 }
 
-function setHit() {
+function setHit(coords) {
   document.getElementById(coords).classList.replace("empty", "hit");
 }
 
@@ -62,6 +63,7 @@ let enemyGrid = createBoard(10);
 let myShips = 3;
 let enemyShips = 3;
 
+//creates an array of arrays to be used to store information on ship locations, hits and misses
 function createBoard(size) {
   let grid = [];
   for (let i = 0; i < size; i++) {
@@ -91,6 +93,7 @@ function gridConsole(grid, isEnemy = false) {
   }
 }
 
+//headings for console log prints
 function createHeaders(size) {
   let result = "   ";
   for (let i = 0; i < size; i++) {
@@ -99,6 +102,7 @@ function createHeaders(size) {
   return result;
 }
 
+//place a ship on the grid by changing the character stored in the array
 function placeShip(x, y, size, orientation, char, grid) {
   if (orientation === "x") {
     for (i = 0; i < size; i++) {
@@ -122,6 +126,7 @@ function checkGrid(coords, grid) {
   return false;
 }
 
+//testing
 placeShip(1, 1, 3, "x", "H", heroGrid);
 
 placeShip(6, 2, 5, "y", "E", enemyGrid);

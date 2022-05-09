@@ -1,0 +1,16 @@
+.hit {
+  background-color: red;
+}
+
+.miss {
+  background-color: white;
+}
+
+.empty {
+  background-color: blue;
+}
+
+table {
+  text-align: center;
+  vertical-align: middle;
+}

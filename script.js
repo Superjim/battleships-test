@@ -72,3 +72,71 @@ function renderGrid(size) {
   //return table;
   gridLocation.appendChild(table);
 }
+
+let heroGrid = createBoard(10);
+let enemyGrid = createBoard(10);
+
+let myShips = 3;
+let enemyShips = 3;
+
+function createBoard(size) {
+  let grid = [];
+  for (let i = 0; i < size; i++) {
+    grid[i] = [];
+    for (let j = 0; j < size; j++) {
+      grid[i][j] = "-";
+      grid.id = i + "" + j;
+    }
+  }
+  return grid;
+}
+
+function gridConsole(grid, isEnemy = false) {
+  const headers = createHeaders(grid.length);
+  console.log(headers);
+  for (let i = 0; i < grid.length; i++) {
+    let rowStr = i + "  ";
+    for (let cell of grid[i]) {
+      if (isEnemy && cell == "0") {
+        rowStr += "-  ";
+      } else {
+        rowStr += cell + "  ";
+      }
+    }
+    console.log(rowStr);
+  }
+}
+
+function createHeaders(size) {
+  let result = "   ";
+  for (let i = 0; i < size; i++) {
+    result += i + "  ";
+  }
+  return result;
+}
+
+function placeShip(x, y, size, orientation, char, grid) {
+  if (orientation === "x") {
+    for (i = 0; i < size; i++) {
+      grid[y][x + i] = char;
+    }
+  } else {
+    for (i = 0; i < size; i++) {
+      grid[y + i][x] = char;
+    }
+  }
+}
+
+function checkGrid(x, y, grid) {
+  if (grid[x][y] != "-") {
+    return true;
+  }
+  return false;
+}
+
+placeShip(1, 1, 3, "x", "H", heroGrid);
+
+placeShip(6, 2, 5, "y", "E", enemyGrid);
+
+gridConsole(enemyGrid, true);
+gridConsole(heroGrid);

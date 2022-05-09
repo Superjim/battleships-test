@@ -133,7 +133,7 @@ function createHeaders(size) {
 }
 
 //place a ship on the grid by changing the character stored in the array
-//eg "-" becomes E in the array
+//eg "-" becomes b in the array
 function placeShip(coords, ship, orientation, grid) {
   let x = coords[0];
   let y = coords[1];
@@ -196,21 +196,37 @@ function checkGrid(coords, grid) {
   return false;
 }
 
-//for ship in ships
-//get random coordinates
-//get random orientation
-//check ship fits
-//place ship on grid
-function placeRandomShips(size, grid) {
-  for (ship in ships) {
-    let coords = getRandomPosition(size);
-    console.log(coords);
-    let orientation = getRandomOrientation();
-    console.log(orientation);
-    if (checkShipFits(coords, orientation, ship, size) === true) {
-      placeShip(coords, ships[ship], orientation, grid);
-    }
+// //for ship in ships
+// //get random coordinates
+// //get random orientation
+// //check ship fits
+// //place ship on grid
+// function placeRandomShips(size, grid) {
+//   for (ship in ships) {
+//     let coords = getRandomPosition(size);
+//     console.log(coords);
+//     let orientation = getRandomOrientation();
+//     console.log(orientation);
+//     if (checkShipFits(coords, orientation, ship, size) === true) {
+//       placeShip(coords, ships[ship], orientation, grid);
+//     }
+//   }
+// }
+
+function placeRandomShip(size, grid, ship) {
+  let coords = getRandomPosition(size);
+  console.log(coords);
+  let orientation = getRandomOrientation();
+  console.log(orientation);
+  if (checkShipFits(coords, orientation, ship, size) === true) {
+    placeShip(coords, ship, orientation, grid);
+  } else {
+    placeRandomShip(size, grid, ship);
   }
+}
+
+for (ship in ships) {
+  placeRandomShip(10, enemyGrid, ships[ship]);
 }
 
 //testing
@@ -221,6 +237,6 @@ function placeRandomShips(size, grid) {
 // placeShip([7, 2], ships[3], "y", enemyGrid);
 // placeShip([9, 2], ships[4], "y", enemyGrid);
 
-placeRandomShips(10, enemyGrid);
+// placeRandomShips(10, enemyGrid);
 gridConsole(enemyGrid);
 // gridConsole(heroGrid);

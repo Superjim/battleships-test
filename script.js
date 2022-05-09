@@ -10,10 +10,10 @@ function renderGrid(size) {
   table.style.height = (size * 50).toString() + "px";
   table.style.border = "1px solid black";
 
-  for (let i = 1; i < size + 1; i++) {
+  for (let i = 0; i < size; i++) {
     const tr = table.insertRow();
     tr.id = "row" + i;
-    for (let j = 1; j < size + 1; j++) {
+    for (let j = 0; j < size; j++) {
       const td = tr.insertCell();
       td.id = i + "," + j;
       td.classList.add("empty");
@@ -35,7 +35,15 @@ function checkHit() {
 }
 
 function getCoords() {
-  setMiss(this.innerText);
+  splitCoords(this.innerText);
+  if (checkGrid(splitCoords(this.innerText), enemyGrid) === true) {
+    setHit(this.innerText);
+  } else setMiss(this.innerText);
+}
+
+function splitCoords(coords) {
+  let split = coords.split(",");
+  return split;
 }
 
 function setMiss(coords) {
@@ -47,31 +55,6 @@ function setHit() {
 }
 
 renderGrid(10);
-
-//builds an array to store location of cpu battleships
-function renderGrid(size) {
-  const body = document.body,
-    table = document.createElement("table");
-  table.id = "table";
-  table.style.width = (size * 50).toString() + "px";
-  table.style.height = (size * 50).toString() + "px";
-  table.style.border = "1px solid black";
-
-  for (let i = 1; i < size + 1; i++) {
-    const tr = table.insertRow();
-    tr.id = "row" + i;
-    for (let j = 1; j < size + 1; j++) {
-      const td = tr.insertCell();
-      td.id = i + "," + j;
-      td.classList.add("empty");
-      td.innerText = i + "," + j;
-      td.style.border = "1px solid black";
-      td.addEventListener("click", getCoords);
-    }
-  }
-  //return table;
-  gridLocation.appendChild(table);
-}
 
 let heroGrid = createBoard(10);
 let enemyGrid = createBoard(10);
@@ -91,6 +74,7 @@ function createBoard(size) {
   return grid;
 }
 
+//prints grid to console, useful for development
 function gridConsole(grid, isEnemy = false) {
   const headers = createHeaders(grid.length);
   console.log(headers);
@@ -127,7 +111,11 @@ function placeShip(x, y, size, orientation, char, grid) {
   }
 }
 
-function checkGrid(x, y, grid) {
+//checks the grid, if anything other than a "-" is present, returns true
+//this shows that a ship is on the grid
+function checkGrid(coords, grid) {
+  let x = coords[0];
+  let y = coords[1];
   if (grid[x][y] != "-") {
     return true;
   }

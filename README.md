@@ -4,6 +4,8 @@ https://superjim.github.io/battleships-test/
 
 First attempt at making a battleships game in html, css and js
 
+press F12 for cheats
+
 big WIP
 
 currently:

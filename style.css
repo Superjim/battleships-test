@@ -1,13 +1,16 @@
 .hit {
   background-color: red;
+  /* color: red; */
 }
 
 .miss {
   background-color: white;
+  /* color: white; */
 }
 
 .empty {
   background-color: blue;
+  /* color: blue; */
 }
 
 table {

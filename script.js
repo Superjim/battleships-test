@@ -39,22 +39,27 @@ const ships = [
   {
     name: "Carrier",
     length: 5,
+    character: "c",
   },
   {
     name: "Battleship",
     length: 4,
+    character: "b",
   },
   {
     name: "Destroyer",
     length: 3,
+    character: "d",
   },
   {
     name: "Submarine",
     length: 3,
+    character: "s",
   },
   {
     name: "Patrol Boat",
     length: 2,
+    character: "p",
   },
 ];
 
@@ -129,7 +134,9 @@ function createHeaders(size) {
 
 //place a ship on the grid by changing the character stored in the array
 //eg "-" becomes E in the array
-function placeShip(x, y, size, orientation, char, grid) {
+function placeShip(x, y, ship, orientation, grid) {
+  size = ship.length;
+  char = ship.character;
   if (orientation === "x") {
     for (i = 0; i < size; i++) {
       grid[y][x + i] = char;
@@ -147,6 +154,15 @@ function getRandomPosition(size) {
   let y = Math.floor(Math.random() * size);
   const coords = [x, y];
   return coords;
+}
+
+//returns x or y
+function getRandomOrientation() {
+  if (Math.round(Math.random()) === 1) {
+    return "x";
+  } else {
+    return "y";
+  }
 }
 
 //if ship will go out of bounds, return false
@@ -179,9 +195,12 @@ function checkGrid(coords, grid) {
 }
 
 //testing
-placeShip(1, 1, 3, "x", "H", heroGrid);
 
-placeShip(6, 2, 5, "y", "E", enemyGrid);
+placeShip(1, 2, ships[0], "y", enemyGrid);
+placeShip(3, 2, ships[1], "y", enemyGrid);
+placeShip(5, 2, ships[2], "y", enemyGrid);
+placeShip(7, 2, ships[3], "y", enemyGrid);
+placeShip(9, 2, ships[4], "y", enemyGrid);
 
-gridConsole(enemyGrid, true);
-gridConsole(heroGrid);
+gridConsole(enemyGrid);
+// gridConsole(heroGrid);

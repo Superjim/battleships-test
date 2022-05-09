@@ -1,5 +1,6 @@
 let gridLocation = document.getElementById("gridContainer");
 
+//builds a table for the player to communicate their moves
 function renderGrid(size) {
   const body = document.body,
     table = document.createElement("table");
@@ -13,25 +14,35 @@ function renderGrid(size) {
     tr.id = "row" + i;
     for (let j = 1; j < size + 1; j++) {
       const td = tr.insertCell();
-      td.id = "cell" + j;
-      td.addEventListener("click", setMiss);
+      td.id = i + "," + j;
       td.classList.add("empty");
-      // td.appendChild(document.createElement("div"));
-      // td.innerText = i + "," + j;
+      td.innerText = i + "," + j;
       td.style.border = "1px solid black";
+      td.addEventListener("click", getCoords);
     }
   }
+  //return table;
   gridLocation.appendChild(table);
 }
 
-function setHit() {
-  this.classList.remove("empty");
-  this.classList.add("hit");
+function checkHit() {
+  if (this.containsShip) {
+    setHit(this);
+  } else {
+    setMiss(this);
+  }
 }
 
-function setMiss() {
-  this.classList.remove("empty");
-  this.classList.add("miss");
+function getCoords() {
+  setMiss(this.innerText);
+}
+
+function setMiss(coords) {
+  document.getElementById(coords).classList.replace("empty", "miss");
+}
+
+function setHit() {
+  document.getElementById(coords).classList.replace("empty", "hit");
 }
 
 renderGrid(10);

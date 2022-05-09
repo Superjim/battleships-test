@@ -196,23 +196,10 @@ function checkGrid(coords, grid) {
   return false;
 }
 
-// //for ship in ships
 // //get random coordinates
 // //get random orientation
 // //check ship fits
 // //place ship on grid
-// function placeRandomShips(size, grid) {
-//   for (ship in ships) {
-//     let coords = getRandomPosition(size);
-//     console.log(coords);
-//     let orientation = getRandomOrientation();
-//     console.log(orientation);
-//     if (checkShipFits(coords, orientation, ship, size) === true) {
-//       placeShip(coords, ships[ship], orientation, grid);
-//     }
-//   }
-// }
-
 function placeRandomShip(size, grid, ship) {
   let coords = getRandomPosition(size);
   console.log(coords);

@@ -91,7 +91,7 @@ function setHit(coords) {
 //for testing
 renderGrid(10);
 let heroGrid = createBoard(10);
-let enemyGrid = createBoard(10);
+//let enemyGrid = createBoard(10);
 
 //creates an array of arrays to be used to store information on ship locations, hits and misses
 function createBoard(size) {
@@ -134,7 +134,7 @@ function createHeaders(size) {
 
 //place a ship on the grid by changing the character stored in the array
 //eg "-" becomes b in the array
-function placeShip(coords, ship, orientation, grid) {
+function placeShip(coords, ship, orientation, grid, array) {
   let x = coords[0];
   let y = coords[1];
   size = ship.length;
@@ -185,8 +185,32 @@ function checkShipFits(coords, orientation, ship, boardsize) {
   }
 }
 
+//checks the board has a correct amount of ships placed
+//this is a poor way of checking there is no overlap
+//but i have spent 5 hours so far and i want to move on
+//it turns the grid into a string then checks for the correct amount of characters
+function countShips(array, character) {
+  let toString = array.toString();
+  return toString.split(character).length - 1;
+}
+
+function checkValidGrid(grid) {
+  if (countShips(grid, "c") === 5) {
+    if (countShips(grid, "b") === 4) {
+      if (countShips(grid, "d") === 3) {
+        if (countShips(grid, "s") === 3) {
+          if (countShips(grid, "p") === 2) {
+            return true;
+          }
+        }
+      }
+    }
+  }
+  return false;
+}
+
 //checks the grid, if anything other than a "-" is present, returns true
-//this shows that a ship is on the grid
+//this shows that a ship is on the grid and is used for "client" side shot detection
 function checkGrid(coords, grid) {
   let x = coords[0];
   let y = coords[1];
@@ -195,16 +219,13 @@ function checkGrid(coords, grid) {
   }
   return false;
 }
-
 // //get random coordinates
 // //get random orientation
 // //check ship fits
 // //place ship on grid
 function placeRandomShip(size, grid, ship) {
   let coords = getRandomPosition(size);
-  console.log(coords);
   let orientation = getRandomOrientation();
-  console.log(orientation);
   if (checkShipFits(coords, orientation, ship, size) === true) {
     placeShip(coords, ship, orientation, grid);
   } else {
@@ -212,18 +233,77 @@ function placeRandomShip(size, grid, ship) {
   }
 }
 
-for (ship in ships) {
-  placeRandomShip(10, enemyGrid, ships[ship]);
+function buildgame() {
+  enemyGrid = createBoard(10);
+  for (ship in ships) {
+    placeRandomShip(10, enemyGrid, ships[ship]);
+  }
 }
 
+running = true;
+
+buildgame();
+
+for (i = 0; i < 20; i++) {
+  if (checkValidGrid(enemyGrid) === false) {
+    buildgame();
+  }
+}
 //testing
-
-// placeShip([1, 2], ships[0], "y", enemyGrid);
-// placeShip([3, 2], ships[1], "y", enemyGrid);
-// placeShip([5, 2], ships[2], "y", enemyGrid);
-// placeShip([7, 2], ships[3], "y", enemyGrid);
-// placeShip([9, 2], ships[4], "y", enemyGrid);
-
-// placeRandomShips(10, enemyGrid);
 gridConsole(enemyGrid);
 // gridConsole(heroGrid);
+
+// //this doesnt work but i might need it later
+// //checks that a ship does not overlap another ship
+// function checkShipOverlap(coords, orientation, ship, grid) {
+//   let x = coords[0];
+//   let y = coords[1];
+//   count = ship.length;
+//   if (orientation === "x") {
+//     for (i = 0; i < count; i++) {
+//       if (grid[x + i][y] != "-") {
+//         return true;
+//       }
+//     }
+//   } else if (orientation === "y") {
+//     for (i = 0; i < count; i++) {
+//       if (grid[x][y + i] != "-") {
+//         return true;
+//       }
+//     }
+//   }
+//   return false;
+// }
+
+//another broken function
+//checks that a ship does not overlap another ship
+// function checkShipOverlap(coords, orientation, ship, grid) {
+//   let x = coords[0];
+//   let y = coords[1];
+//   count = ship.length;
+//   let board = [];
+//   let test = [];
+//   if (orientation === "x") {
+//     for (i = 0; i < count; i++) {
+//       board.push(grid[x + i][y]);
+//       test.push("-");
+//     }
+//     board = board.join("");
+//     test = test.join("");
+//     console.log(board);
+//     console.log(test);
+//     if (board === test) return true;
+//     else return false;
+//   } else if (orientation === "y") {
+//     for (i = 0; i < count; i++) {
+//       board.push(grid[x][y + i]);
+//       test.push("-");
+//     }
+//     board = board.join("");
+//     test = test.join("");
+//     console.log(board);
+//     console.log(test);
+//     if (board === test) return true;
+//     else return false;
+//   }
+// }

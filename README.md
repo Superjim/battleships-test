@@ -18,5 +18,5 @@ they _DO_ overlap
 
 im trying to pretend theres a client and a server side to this project
 
-the "rendering" is a DOM table, cells get assigned classes by a function that communicates with a "server" side grid array.
+the "rendering" is a DOM table, cells get assigned classes by a function that communicates with a "server" side grid array. Each cell has an onclick event listener.
 Classes have seperate css values, miss = white, hit = red.

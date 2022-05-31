@@ -1,6 +1,6 @@
 # battleships-test
 
-https://superjim.github.io/battleships-test/
+[Live Demo](https://superjim.github.io/battleships-test/)
 
 First attempt at making a battleships game in html, css and js
 
